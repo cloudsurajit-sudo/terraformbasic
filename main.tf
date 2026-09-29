@@ -9,12 +9,30 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
+}
+
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_security_group_rule" "allow_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0/0"]
+  security_group_id = data.aws_security_group.default.id
 }
 
 resource "aws_instance" "lab1" {
   ami           = "ami-0c02fb55956c7d316"
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   tags = {
     Name = "lab1-instance"
   }
