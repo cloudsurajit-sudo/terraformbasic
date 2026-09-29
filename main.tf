@@ -4,12 +4,12 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
+    }
   }
-}
 }
 
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_instance" "lab1" {
@@ -17,6 +17,18 @@ resource "aws_instance" "lab1" {
   instance_type = "t2.micro"
   tags = {
     Name = "lab1-instance"
+  }
+}
+
+resource "aws_security_group" "lab1_sg" {
+  name        = "lab1-security-group"
+  description = "Security group for lab1 instance"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
