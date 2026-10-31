@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "var.region"
+  region = var.region
 }
 
 data "aws_vpc" "default" {
@@ -32,7 +32,7 @@ resource "aws_security_group_rule" "allow_all_inbound" {
 
 resource "aws_instance" "my_instance" {
   ami             = "ami-******"
-  instance_type   = "var.instance_type"
+  instance_type   = var.instance_type
   security_groups = [data.aws_security_group.default.name]
 
   tags = {
