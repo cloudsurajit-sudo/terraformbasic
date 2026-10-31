@@ -12,12 +12,12 @@ provider "aws" {
 }
 
 data "aws_vpc" "default" {
-    default = true
+  default = true
 }
 
 data "aws_security_group" "default" {
-    name   = "default"
-    vpc_id = data.aws_vpc.default.id
+  name   = "default"
+  vpc_id = data.aws_vpc.default.id
 }
 
 resource "aws_security_group_rule" "allow_all_inbound" {
@@ -26,12 +26,12 @@ resource "aws_security_group_rule" "allow_all_inbound" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-    security_group_id = data.aws_security_group.default.id
+  security_group_id = data.aws_security_group.default.id
 }
 
 resource "aws_instance" "my_instance" {
-  ami           = "ami-******"
-  instance_type = "var.instance_type"
+  ami             = "ami-******"
+  instance_type   = "var.instance_type"
   security_groups = [data.aws_security_group.default.name]
 
   tags = {
