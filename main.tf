@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "allow_all_inbound" {
 }
 
 resource "aws_instance" "my_instance" {
-  ami             = "ami-******"
+  ami             = "ami-0225644bfadc204f7"
   instance_type   = var.instance_type
   security_groups = [data.aws_security_group.default.name]
 
